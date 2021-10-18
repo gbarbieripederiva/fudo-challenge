@@ -11,7 +11,7 @@ getDB().catch((e) => {
 
 app.use("/", express.json());
 
-app.use("/auth", AuthRoute);
+app.use("/api/auth", AuthRoute);
 
 app.listen(PORT, () => {
     console.log(`API Running on port ${PORT}...`);
