@@ -2,9 +2,10 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node .",
+    "start": "tsc && node dist/index.js",
+    "start:nodemon":"ts-node src/index.ts",
     "dev": "nodemon ."
   },
   "keywords": [],
