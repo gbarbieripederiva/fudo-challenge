@@ -10,8 +10,9 @@ export async function login(username:string,password:string):Promise<boolean> {
     const res = await fetch("/api/auth/login",{
         method:"POST",
         headers:{
-            authorization:"Basic "+utf8_to_b64(username+":"+password)
-        }
+            "content-type":"application/json"
+        },
+        body:JSON.stringify({username,password})
     })
     return res.ok;
 }

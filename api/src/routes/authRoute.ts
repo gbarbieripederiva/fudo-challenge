@@ -7,10 +7,41 @@ const router = Router();
 router.post("/login", async (req, res) => {
     const UNAUTHORIZED_HEADER = { "WWW-Authenticate": 'Basic realm="fruits"' };
 
+    if (req.body.username && req.body.password) {
+        // If it got up to here then its authorized
+        if (
+            await AuthService.checkUsernameAndPassword(
+                req.body.username,
+                req.body.password
+            )
+        ) {
+            res.sendStatus(200);
+        }else{
+            // anything wrong here is an unauthorized
+            res.header(UNAUTHORIZED_HEADER).sendStatus(401);
+        }
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+router.post("/user", async (req, res) => {
+    let user = req.body as User;
+    let userCreated = AuthService.createUser(user);
+    if (userCreated) {
+        // TODO:check status code
+        res.status(200).send(userCreated);
+    } else {
+        // TODO:check status code
+        res.sendStatus(500);
+    }
+});
+
+export async function checkAuth(authheader:string) {
     // Check if authorization header is present
-    if (req.headers.authorization) {
+    if (authheader) {
         // Check its basic authorization and obtain username and password encoded
-        let loginInfo = req.headers.authorization.match(
+        let loginInfo = authheader.match(
             /Basic *([A-Za-z0-9=+/]+)/
         );
         if (loginInfo && loginInfo.length >= 2) {
@@ -28,31 +59,19 @@ router.post("/login", async (req, res) => {
                 ))
             ) {
                 // If it got up to here then its authorized
-                res.sendStatus(200);
+                return {isAuth:true,status:200};
             } else {
                 // anything wrong here is an unauthorized
-                res.header(UNAUTHORIZED_HEADER).sendStatus(401);
+                return {isAuth:false,status:401};
             }
         } else {
-            // If tag not basic or missing username:password then its bad request
-            res.header(UNAUTHORIZED_HEADER).sendStatus(400);
+            // If tag not basic or missing username:password then its 
+            return {isAuth:false,status:400};
         }
     } else {
-        // If authorazation header not present its a bad request
-        res.header(UNAUTHORIZED_HEADER).sendStatus(400);
+        // If authorazation header not present its a 
+        return {isAuth:false,status:400};
     }
-});
-
-router.post("/user", async (req, res) => {
-    let user = req.body as User;
-    let userCreated = AuthService.createUser(user);
-    if (userCreated) {
-        // TODO:check status code
-        res.status(200).send(userCreated);
-    } else {
-        // TODO:check status code
-        res.sendStatus(500);
-    }
-});
+}
 
 export default router;
