@@ -27,10 +27,9 @@ router.post("/login", async (req, res) => {
 
 router.post("/user", async (req, res) => {
     let user = req.body as User;
-    let userCreated = AuthService.createUser(user);
+    let userCreated = await AuthService.createUser(user);
     if (userCreated) {
-        // TODO:check status code
-        res.status(200).send(userCreated);
+        res.status(201).send(userCreated);
     } else {
         // TODO:check status code
         res.sendStatus(500);

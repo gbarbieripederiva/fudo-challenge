@@ -14,5 +14,9 @@ export async function checkUsernameAndPassword(
 }
 
 export async function createUser(user: User) {
-    return AuthPersistence.createUser(user);
+    if (await AuthPersistence.getUserByUsername(user.username)) {
+        return null;
+    }else{
+        return await AuthPersistence.createUser(user);
+    }
 }

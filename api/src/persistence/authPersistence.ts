@@ -11,9 +11,13 @@ export async function getUserByUsername(
 
 export async function createUser(user: User) {
     let db = await getDB();
-    let createdUser = await db.run(
+    let resp = await db.run(
         "INSERT INTO users(username, password) VALUES (?,?)",
         [user.username,user.password]
     );
-    return createdUser;
+    if (!resp.changes) {
+        return null;
+    }else{
+        return await db.get("SELECT id,username,password FROM users WHERE users.username = ?",[user.username]);
+    }
 }
