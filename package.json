@@ -1,0 +1,17 @@
+{
+    "name": "fudo-challenge",
+    "description": "description",
+    "authors": "author",
+    "version": "1.0.0",
+    "main": "pathToMain",
+    "dependencies": {},
+    "scripts": {
+        "build:webapp":"cd webapp;npm run build",
+        "build:api":"cd api;npm run build",
+        "copy":"cp -r api/dist ./ && cp -r webapp/dist ./dist/public",
+        "build":"npm run build:webapp && npm run build:api && npm run copy",
+        "dev:webapp":"cd webapp; npm run serve",
+        "dev:api":"cd api; npm run dev",
+        "dev":"npm run dev:api & npm run dev:webapp"
+    }
+}

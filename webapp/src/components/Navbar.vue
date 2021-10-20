@@ -33,7 +33,7 @@ export default class Navbar extends Vue{
   get user():User|null{
     return Api.user;
   }
-  async logout(){
+  async logout():Promise<void>{
     await Api.logout();
     this.$router.push({name:"Login"})
   }
