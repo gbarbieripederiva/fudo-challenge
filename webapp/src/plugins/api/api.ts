@@ -21,7 +21,6 @@ class Api{
         }
     }
 
-
     async login(username:string,password:string):Promise<boolean> {
         const res = await fetch(Api.getUrl("/auth/login"),{
             method:"POST",
@@ -35,6 +34,10 @@ class Api{
             this.user = {username,password};
         }
         return res.ok;
+    }
+    
+    async logout(){
+        this.user = null;
     }
 
     async getUserFruits(){
