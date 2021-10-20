@@ -16,7 +16,7 @@
           <b-row class="mt-3">
             <b-form-input
               v-model="password"
-              placeholder="password"
+              placeholder="contraseña"
               type="password"
               :state="isPasswordValid"
             ></b-form-input>

@@ -1,15 +1,29 @@
 import { User } from "./apiInterfaces";
 import Vue from "vue";
+import { getAuthorizationHeader } from "./apiUtils";
 
 class Api{
     user:User|null = null;
-
+    
     get isLogged() : boolean {
         return this.user != null;
     }
     
+    private static API_URL = "/api";
+    private static getUrl(url:string){
+        if (url[0]=='/') {
+            return Api.API_URL + url;
+        }else if(url[0]=='.'){
+            return url;
+        }
+        else{
+            return Api.API_URL + "/" + url;
+        }
+    }
+
+
     async login(username:string,password:string):Promise<boolean> {
-        const res = await fetch("/api/auth/login",{
+        const res = await fetch(Api.getUrl("/auth/login"),{
             method:"POST",
             headers:{
                 "content-type":"application/json"
@@ -21,6 +35,24 @@ class Api{
             this.user = {username,password};
         }
         return res.ok;
+    }
+
+    async getUserFruits(){
+        if(!this.user){
+            throw new Error("Not logged");
+        }
+
+        const res = await fetch(Api.getUrl("/fruit"),{
+            headers:{
+                authorization:getAuthorizationHeader(this.user.username,this.user.password)
+            }
+        });
+        if (res.ok) {
+            const fruits = await res.json();
+            return fruits;
+        }else{
+            return [];
+        }
     }
 }
 
