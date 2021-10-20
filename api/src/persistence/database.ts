@@ -16,7 +16,7 @@ export async function getDB() {
             filename:":memory:",
             driver: sqlite3.Database
         });
-        for (const file of fs.readdirSync(dbScriptsFolder)) {
+        for (const file of fs.readdirSync(dbScriptsFolder).sort()) {
             if (file.match(/.*\.sql$/)) {
                 await db.exec(fs.readFileSync(path.join(dbScriptsFolder,file)).toString());
             }

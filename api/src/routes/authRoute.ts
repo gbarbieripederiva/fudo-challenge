@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { User } from "../models/user";
-import * as AuthService from "../services/authServices";
+import * as AuthPersistence from "../persistence/authPersistence";
 
 const router = Router();
 
@@ -9,13 +8,9 @@ router.post("/login", async (req, res) => {
 
     if (req.body.username && req.body.password) {
         // If it got up to here then its authorized
-        if (
-            await AuthService.checkUsernameAndPassword(
-                req.body.username,
-                req.body.password
-            )
-        ) {
-            res.sendStatus(200);
+        let user = await AuthPersistence.getUserByUsername(req.body.username)
+        if (user && user.password == req.body.password) {
+            res.status(200).send(user);
         }else{
             // anything wrong here is an unauthorized
             res.header(UNAUTHORIZED_HEADER).sendStatus(401);
@@ -28,7 +23,7 @@ router.post("/login", async (req, res) => {
 // TODO: check if necesary
 // router.post("/user", async (req, res) => {
 //     let user = req.body as User;
-//     let userCreated = await AuthService.createUser(user);
+//     let userCreated = await AuthPersistence.createUser(user);
 //     if (userCreated) {
 //         res.status(201).send(userCreated);
 //     } else {
@@ -37,7 +32,7 @@ router.post("/login", async (req, res) => {
 //     }
 // });
 
-export async function checkAuth(authheader:string) {
+export async function authenticate(authheader:string|undefined) {
     // Check if authorization header is present
     if (authheader) {
         // Check its basic authorization and obtain username and password encoded
@@ -49,28 +44,29 @@ export async function checkAuth(authheader:string) {
             let usernameAndPassword = Buffer.from(loginInfo[1], "base64")
                 .toString()
                 .split(":");
+            
             // Check username and password are present and are correct
             if (
-                usernameAndPassword &&
-                usernameAndPassword.length == 2 &&
-                (await AuthService.checkUsernameAndPassword(
-                    usernameAndPassword[0],
-                    usernameAndPassword[1]
-                ))
-            ) {
-                // If it got up to here then its authorized
-                return {isAuth:true,status:200};
+                usernameAndPassword && usernameAndPassword.length == 2 ) {
+                let user = await AuthPersistence.getUserByUsername(usernameAndPassword[0]);
+                if (user && user.password == usernameAndPassword[1]) {
+                    // If it got up to here then its authorized
+                    return {isAuth:true,status:200,user:user};
+                } else {
+                    // anything wrong here is an unauthorized
+                    return {isAuth:false,status:401,user:null};
+                }
             } else {
                 // anything wrong here is an unauthorized
-                return {isAuth:false,status:401};
+                return {isAuth:false,status:401,user:null};
             }
         } else {
             // If tag not basic or missing username:password then its 
-            return {isAuth:false,status:400};
+            return {isAuth:false,status:400,user:null};
         }
     } else {
         // If authorazation header not present its a 
-        return {isAuth:false,status:400};
+        return {isAuth:false,status:400,user:null};
     }
 }
 
