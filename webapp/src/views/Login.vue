@@ -1,6 +1,6 @@
 <template>
   <b-container class="h-100 d-flex justify-content-center align-items-center">
-    <b-card title="Iniciar sesión" class="w-50">
+    <b-card title="Iniciar sesión" class="loginCard">
       <b-form @submit="handleSubmit">
         <b-container>
           <b-row class="mt-3">
@@ -67,3 +67,9 @@ export default class Login extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.loginCard{
+  width: 25em;
+}
+</style>

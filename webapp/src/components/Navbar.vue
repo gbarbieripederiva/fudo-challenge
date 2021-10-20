@@ -1,6 +1,6 @@
 <template>
   <b-navbar variant="danger">
-    <b-navbar-brand to="/">Fruits</b-navbar-brand>
+    <b-navbar-brand to="/">{{appName}}</b-navbar-brand>
     <b-navbar-nav v-if="!isLogged" class="ml-auto">
       <b-nav-item to="/login">Iniciar sesión</b-nav-item>
     </b-navbar-nav>
@@ -17,6 +17,8 @@ import { User } from "@/plugins/api/apiInterfaces";
 
 @Component
 export default class Navbar extends Vue{
+  appName = process.env.VUE_APP_NAME;
+
   get isLogged():boolean{
     return Api.isLogged;
   }

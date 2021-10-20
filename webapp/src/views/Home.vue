@@ -1,8 +1,9 @@
 <template>
-  <b-container class="h-100 d-flex justify-content-center align-items-center">
-    <b-card title="Frutas">
+  <b-container class="d-flex justify-content-center p-5">
+    <b-card class="fruitCard" title="Frutas">
       <b-list-group flush>
-        <b-list-group-item v-for="f in fruits" :key="f.id"><FruitItem :fruit="f"/></b-list-group-item>
+        <b-list-group-item class="w-100" v-for="f in fruits" :key="f.id"><FruitItem :fruit="f"/></b-list-group-item>
+        <b-list-group-item class="w-100 d-flex justify-content-center"><b-btn >+</b-btn></b-list-group-item>
       </b-list-group>
     </b-card>
   </b-container>
@@ -27,3 +28,10 @@ export default class Home extends Vue{
   }
 }
 </script>
+
+<style scoped>
+  .fruitCard{
+    width: 25em;
+    min-height: 20em;
+  }
+</style>
