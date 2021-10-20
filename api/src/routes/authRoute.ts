@@ -25,16 +25,17 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/user", async (req, res) => {
-    let user = req.body as User;
-    let userCreated = await AuthService.createUser(user);
-    if (userCreated) {
-        res.status(201).send(userCreated);
-    } else {
-        // TODO:check status code
-        res.sendStatus(500);
-    }
-});
+// TODO: check if necesary
+// router.post("/user", async (req, res) => {
+//     let user = req.body as User;
+//     let userCreated = await AuthService.createUser(user);
+//     if (userCreated) {
+//         res.status(201).send(userCreated);
+//     } else {
+//         // TODO:check status code
+//         res.sendStatus(500);
+//     }
+// });
 
 export async function checkAuth(authheader:string) {
     // Check if authorization header is present
