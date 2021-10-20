@@ -1,4 +1,4 @@
-import { User } from "./apiInterfaces";
+import { Fruit, User } from "./apiInterfaces";
 import Vue from "vue";
 import { getAuthorizationHeader } from "./apiUtils";
 
@@ -26,7 +26,7 @@ class Api{
         const res = await fetch(Api.getUrl("/auth/login"),{
             method:"POST",
             headers:{
-                "content-type":"application/json"
+                "Content-type":"application/json"
             },
             body:JSON.stringify({username,password})
         })
@@ -44,7 +44,7 @@ class Api{
 
         const res = await fetch(Api.getUrl("/fruit"),{
             headers:{
-                authorization:getAuthorizationHeader(this.user.username,this.user.password)
+                "Authorization":getAuthorizationHeader(this.user.username,this.user.password)
             }
         });
         if (res.ok) {
@@ -52,6 +52,27 @@ class Api{
             return fruits;
         }else{
             return [];
+        }
+    }
+
+    async createUserFruit(fruit:Fruit){
+        if(!this.user){
+            throw new Error("Not logged");
+        }
+
+        const res = await fetch(Api.getUrl("/fruit"),{
+            headers:{
+                "Content-type":"application/json",
+                "Authorization":getAuthorizationHeader(this.user.username,this.user.password)
+            },
+            method:"POST",
+            body:JSON.stringify(fruit)
+        });
+        if (res.ok) {
+            const fruit = await res.json();
+            return fruit;
+        }else{
+            return null;
         }
     }
 }
