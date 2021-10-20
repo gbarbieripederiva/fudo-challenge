@@ -12,6 +12,9 @@
         "build":"npm run build:webapp && npm run build:api && npm run copy",
         "dev:webapp":"cd webapp; npm run serve",
         "dev:api":"cd api; npm run dev",
-        "dev":"npm run dev:api & npm run dev:webapp"
+        "dev":"npm run dev:api & npm run dev:webapp",
+        "install:webapp":"cd webapp; npm install",
+        "install:api":"cd api; npm install",
+        "install":"npm run install:api & npm run install:webapp"
     }
 }
