@@ -1,16 +1,16 @@
 <template>
   <b-container class="h-100 d-flex justify-content-center align-items-center">
-    <b-card title="Login" class="w-50">
+    <b-card title="Iniciar sesión" class="w-50">
       <b-form @submit="handleSubmit">
         <b-container>
           <b-row class="mt-3">
             <b-form-input
               v-model="username"
-              placeholder="username"
+              placeholder="usuario"
               :state="isUsernameValid"
             ></b-form-input>
             <b-form-invalid-feedback :state="isUsernameValid">
-              El username no puede estar vacío
+              El usuario no puede estar vacío
             </b-form-invalid-feedback>
           </b-row>
           <b-row class="mt-3">
@@ -25,7 +25,7 @@
             </b-form-invalid-feedback>
           </b-row>
           <b-row class="mt-3 justify-content-end">
-            <b-btn type="submit" variant="success">Login</b-btn>
+            <b-btn type="submit" variant="success">Iniciar sesión</b-btn>
           </b-row>
         </b-container>
       </b-form>
