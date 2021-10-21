@@ -61,7 +61,7 @@ export default class AddFruitModal extends Vue {
     return Math.sqrt((2 + rl/256) * dr*dr + 4 * dg*dg + (2 + (255-rl)/256) * db*db)
   }
 
- static hexToRgb(hex:string):number[]|null {
+ static hexToRgb(hex:string):number[] | null {
     let shorthandRegex = /([\da-f])([\da-f])([\da-f])/i;
     hex = hex.replace(shorthandRegex, function(m, r, g, b) {
       return r + r + g + g + b + b;
@@ -75,16 +75,17 @@ export default class AddFruitModal extends Vue {
 
   handleColorPickerChange():void{
     let currRGB = AddFruitModal.hexToRgb(this.color);
-    this.colorNamePlaceholder = "ej: " + AddFruitModal.ColorTable.reduce((acc,cur)=>{
-      if(
-          AddFruitModal.ColorDiff(acc.RGBArr,currRGB) 
-          > AddFruitModal.ColorDiff(cur.RGBArr,currRGB)
-        ){
-          return cur;
-        }else{
-          return acc;
-        }
-    }).Spanish
+    if (currRGB != null) {
+      this.colorNamePlaceholder = "ej: " + AddFruitModal.ColorTable.reduce((acc,cur)=>{
+        if(
+            AddFruitModal.ColorDiff(acc.RGBArr,currRGB!) > AddFruitModal.ColorDiff(cur.RGBArr,currRGB!)
+          ){
+            return cur;
+          }else{
+            return acc;
+          }
+      }).Spanish
+    }
   }
 
   @Emit("cancel")
