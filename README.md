@@ -27,4 +27,8 @@ Para construir las partes por separado se puede correr:
 npm run build # En api
 npm run build # En webapp 
 ```
-Luego es necesario copiar la carpeta ```dist``` de ```webapp``` a la carpeta ```dist``` de ```api``` cambiandole el nombre a ```public```
+
+Por ultimo correr:
+```
+npm start
+```
