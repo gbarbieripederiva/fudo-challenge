@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS users(
     password TEXT NOT NULL
 );
 -- Default user
-INSERT INTO users (id,username,password) VALUES (1,"usuario","contraseña");
+INSERT OR IGNORE INTO users (id,username,password) VALUES (1,"usuario","contraseña");

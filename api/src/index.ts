@@ -7,7 +7,7 @@ const PORT = 8081;
 const app = express();
 
 getDB().catch((e) => {
-    console.error("Error initializing database");
+    console.error("Error initializing database:",e);
 });
 
 app.use("/", express.json());

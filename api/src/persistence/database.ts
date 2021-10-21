@@ -4,6 +4,8 @@ import fs from "fs";
 import path from "path";
 
 const dbScriptsFolder = path.join(__dirname,"databaseStartingScripts");
+const databaseFolder = path.join(__dirname,"..","data");
+const databaseFilename = "database.db";
 
 let db:Database<sqlite3.Database, sqlite3.Statement>|null = null;
 sqlite3.verbose()
@@ -11,9 +13,10 @@ sqlite3.verbose()
 
 export async function getDB() {
     if (db == null) {
+        fs.mkdirSync(databaseFolder,{recursive:true})
         db = await open({
             // TODO:change to file
-            filename:":memory:",
+            filename:path.join(databaseFolder,databaseFilename),
             driver: sqlite3.Database
         });
         for (const file of fs.readdirSync(dbScriptsFolder).sort()) {
