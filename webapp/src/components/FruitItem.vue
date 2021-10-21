@@ -1,10 +1,10 @@
 <template>
     <b-container fluid class="p-0">
         <b-row class="d-flex justify-content-start align-items-center">
-            <span v-b-tooltip.hover :title="fruit.colorName" :style="spanStyle" class="mx-4">
+            <span v-b-tooltip.hover="fruit.colorName?fruit.colorName:'(Sin nombre de color)'" :style="spanStyle" class="mx-4">
                 <img class="fruits-icon hola" :src="fruitIcon">
             </span>
-            <p>{{fruit.name}}</p>
+            <p>{{fruit.name?fruit.name:"(Sin nombre)"}}</p>
         </b-row>
     </b-container>
 </template>
