@@ -30,8 +30,7 @@ class Api{
             body:JSON.stringify({username,password})
         })
         if (res.ok) {
-            // TODO: check afterward
-            this.user = {username,password};
+            this.user = await res.json();
         }
         return res.ok;
     }
@@ -80,6 +79,5 @@ class Api{
     }
 }
 
-// TODO: there are better ways to implement a store in vue
-// this is just a simple one
+// TODO: there are better ways to implement a store in vue this is just a simple one
 export default Vue.observable(new Api());

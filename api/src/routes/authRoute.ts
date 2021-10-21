@@ -20,18 +20,6 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// TODO: check if necesary
-// router.post("/user", async (req, res) => {
-//     let user = req.body as User;
-//     let userCreated = await AuthPersistence.createUser(user);
-//     if (userCreated) {
-//         res.status(201).send(userCreated);
-//     } else {
-//         // TODO:check status code
-//         res.sendStatus(500);
-//     }
-// });
-
 export async function authenticate(authheader:string|undefined) {
     // Check if authorization header is present
     if (authheader) {

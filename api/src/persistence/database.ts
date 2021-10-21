@@ -15,7 +15,6 @@ export async function getDB() {
     if (db == null) {
         fs.mkdirSync(databaseFolder,{recursive:true})
         db = await open({
-            // TODO:change to file
             filename:path.join(databaseFolder,databaseFilename),
             driver: sqlite3.Database
         });

@@ -20,7 +20,6 @@ function isValidFruit(fruit: any) {
 
 router.get("/", async (req, res) => {
     let authed = await authenticate(req.headers.authorization);
-    // TODO: Check condition
     if (!authed.isAuth || !authed.user || !authed.user.id) {
         res.sendStatus(authed.status);
     } else {
@@ -33,7 +32,6 @@ router.post("/", async (req, res) => {
         res.sendStatus(400);
     }else{
         let authed = await authenticate(req.headers.authorization);
-        // TODO: Check condition
         if (!authed.isAuth || !authed.user || !authed.user.id) {
             res.sendStatus(authed.status);
         } else {
