@@ -2,13 +2,8 @@
 ## Antes de correrlo
 Correr:
 ```
-npm run install
-```
-Tambien se pueden instalar por separado corriendo:
-```
 npm install
 ```
-en las dos carpetas
 
 ## Como correrlo (dev)
 Para correr ambos devservers juntos simplemente correr:

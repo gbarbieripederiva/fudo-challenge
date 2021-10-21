@@ -6,15 +6,18 @@
     "main": "pathToMain",
     "dependencies": {},
     "scripts": {
-        "build:webapp":"cd webapp;npm run build",
-        "build:api":"cd api;npm run build",
-        "copy":"cp -r api/dist ./ && cp -r webapp/dist ./dist/public",
-        "build":"npm run build:webapp && npm run build:api && npm run copy",
-        "dev:webapp":"cd webapp; npm run serve",
-        "dev:api":"cd api; npm run dev",
-        "dev":"npm run dev:api & npm run dev:webapp",
-        "install:webapp":"cd webapp; npm install",
-        "install:api":"cd api; npm install",
-        "install":"npm run install:api & npm run install:webapp"
+        "build:webapp": "cd webapp ; npm run build",
+        "build:api": "cd api ; npm run build",
+        "copy": "shx cp -r api/dist ./ && shx cp -r webapp/dist ./dist/public",
+        "build": "npm run build:webapp && npm run build:api && npm run copy",
+        "dev:webapp": "cd webapp ; npm run serve",
+        "dev:api": "cd api ; npm run dev",
+        "dev": "npm run dev:api & npm run dev:webapp",
+        "install:webapp": "cd webapp ; npm install",
+        "install:api": "cd api ; npm install",
+        "postinstall": "npm run install:api & npm run install:webapp"
+    },
+    "devDependencies": {
+        "shx": "^0.3.3"
     }
 }
