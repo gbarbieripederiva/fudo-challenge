@@ -7,9 +7,10 @@ router.post("/login", async (req, res) => {
     const UNAUTHORIZED_HEADER = { "WWW-Authenticate": 'Basic realm="fruits"' };
 
     if (req.body.username && req.body.password) {
-        // If it got up to here then its authorized
+        // TODO: Could add sha256 hashing with crypto
         let user = await AuthPersistence.getUserByUsername(req.body.username)
         if (user && user.password == req.body.password) {
+            // If it got up to here then its authorized 
             res.status(200).send(user);
         }else{
             // anything wrong here is an unauthorized
@@ -33,6 +34,7 @@ export async function authenticate(authheader:string|undefined) {
                 .toString()
                 .split(":");
             
+            // TODO: Could add sha256 hashing with crypto
             // Check username and password are present and are correct
             if (
                 usernameAndPassword && usernameAndPassword.length == 2 ) {

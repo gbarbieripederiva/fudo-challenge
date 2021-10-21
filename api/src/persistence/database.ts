@@ -12,7 +12,9 @@ sqlite3.verbose()
 
 
 export async function getDB() {
+    // If db is not initialized initialize it
     if (db == null) {
+        // Create folder if not exists, open it and initialize database
         fs.mkdirSync(databaseFolder,{recursive:true})
         db = await open({
             filename:path.join(databaseFolder,databaseFilename),

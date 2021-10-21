@@ -2,6 +2,7 @@ import { Fruit } from "models/fruit";
 import { getDB } from "./database";
 
 export async function getFruitsByUserId(id: number) {
+    // Get db then get all user's fruit
     let db = await getDB();
     let fruits = await db.all("SELECT * FROM fruits WHERE fruits.userid = ?;", [
         id,
@@ -10,6 +11,7 @@ export async function getFruitsByUserId(id: number) {
 }
 
 export async function createFruitByUserId(id: number, fruit: Fruit) {
+    // Get db then try create fruit
     let db = await getDB();
     let res = await db.run(
         "INSERT INTO fruits(userid,name,color,colorName) VALUES(?,?,?,?);",

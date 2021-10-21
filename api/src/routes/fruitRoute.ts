@@ -5,6 +5,7 @@ import * as FruitPersistence from "../persistence/fruitPersistence";
 const router = Router();
 
 function isValidFruit(fruit: any) {
+    // Check if object is a valid fruit by checking all its properties
     if (
         fruit &&
         typeof fruit.name === "string" &&
@@ -19,6 +20,7 @@ function isValidFruit(fruit: any) {
 }
 
 router.get("/", async (req, res) => {
+    // Authenticate, if authed return all fruits
     let authed = await authenticate(req.headers.authorization);
     if (!authed.isAuth || !authed.user || !authed.user.id) {
         res.sendStatus(authed.status);
@@ -28,9 +30,11 @@ router.get("/", async (req, res) => {
     }
 });
 router.post("/", async (req, res) => {
+    // Check body is a valid fruit
     if (!isValidFruit(req.body)) {
         res.sendStatus(400);
     }else{
+        // Authenticate, if authed create fruit and return it
         let authed = await authenticate(req.headers.authorization);
         if (!authed.isAuth || !authed.user || !authed.user.id) {
             res.sendStatus(authed.status);
